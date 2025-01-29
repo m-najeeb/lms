@@ -31,6 +31,36 @@ class BookControllers {
       );
     }
   }
+
+  //   async searchBook(req, res) {
+  //     try {
+  //       const data = req.body;
+  //       const response = await bookImplementation.searchBook(data);
+  //       res.status(ResponseService.status).send(response);
+  //     } catch (error) {
+  //       ResponseService.status = constants.CODE.INTERNAL_SERVER_ERROR;
+  //       return ResponseService.responseService(
+  //         constants.STATUS.EXCEPTION,
+  //         error.message,
+  //         messages.EXCEPTION
+  //       );
+  //     }
+  //   }
+
+  async updateBook(req, res) {
+    try {
+      const data = req.body;
+      const response = await bookImplementation.updateBook(data);
+      res.status(ResponseService.status).send(response);
+    } catch (error) {
+      ResponseService.status = constants.CODE.INTERNAL_SERVER_ERROR;
+      return ResponseService.responseService(
+        constants.STATUS.EXCEPTION,
+        error.message,
+        messages.EXCEPTION
+      );
+    }
+  }
 }
 
 module.exports = new BookControllers();
