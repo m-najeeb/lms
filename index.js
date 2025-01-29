@@ -3,7 +3,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-// const setup = require("./api/routes");
+const setup = require("./api/routes");
 
 const app = express();
 
@@ -39,7 +39,7 @@ mongoose
     process.exit(1);
   });
 
-// setup(app);
+setup(app);
 
 app.listen(port, () => {
   console.log(`Server Running on port http://localhost:${port}`);
