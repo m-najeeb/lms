@@ -6,6 +6,10 @@ class BookQueries {
     return await book.save();
   }
 
+  async getBookDetails(data) {
+    return await BookSchema.find({ isDeleted: false });
+  }
+
   async getBookById(id) {
     return await BookSchema.findById({ id: id });
   }

@@ -4,6 +4,21 @@ const messages = require("../../src/utilities/messages");
 const bookImplementation = require("../implementation/bookImplementation");
 
 class BookControllers {
+  async getBooks(req, res) {
+    try {
+      const data = req.body;
+      const response = await bookImplementation.getBooks(data);
+      res.status(ResponseService.status).send(response);
+    } catch (error) {
+      ResponseService.status = constants.CODE.INTERNAL_SERVER_ERROR;
+      return ResponseService.responseService(
+        constants.STATUS.EXCEPTION,
+        error.message,
+        messages.EXCEPTION
+      );
+    }
+  }
+
   async addBook(req, res) {
     try {
       const data = req.body;
