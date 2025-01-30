@@ -7,13 +7,13 @@ const bcrypt = require("bcrypt");
 class UserImplementation {
   async signUp(data) {
     try {
-      const { username, email, phone } = data;
+      const { fullName, email, phone } = data;
       const errorMessages = [];
 
       const existingUser = await UserQueries.getUserDetailsByData(data);
 
       if (existingUser) {
-        if (existingUser.username === username)
+        if (existingUser.fullName === fullName)
           errorMessages.push(messages.USERNAME_EXISTS);
         if (existingUser.email === email)
           errorMessages.push(messages.EMAIL_EXISTS);
