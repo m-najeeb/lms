@@ -90,6 +90,20 @@ class BookControllers {
       );
     }
   }
+
+  async onLease(req, res) {
+    try {
+      const response = await bookImplementation.onLease();
+      res.status(ResponseService.status).send(response);
+    } catch (error) {
+      ResponseService.status = constants.CODE.INTERNAL_SERVER_ERROR;
+      return ResponseService.responseService(
+        constants.STATUS.EXCEPTION,
+        error.message,
+        messages.EXCEPTION
+      );
+    }
+  }
 }
 
 module.exports = new BookControllers();

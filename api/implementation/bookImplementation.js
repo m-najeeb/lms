@@ -153,5 +153,27 @@ class BookImplementation {
       );
     }
   }
+
+  async onLease() {
+    try {
+      const response = await BookQueries.getBookHolderUser();
+      if (response) {
+        ResponseService.status = constants.CODE.OK;
+        return ResponseService.responseService(
+          constants.STATUS.SUCCESS,
+          response,
+          messages.BOOK_FOUND
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      ResponseService.status = constants.CODE.INTERNAL_SERVER_ERROR;
+      return ResponseService.responseService(
+        constants.STATUS.EXCEPTION,
+        error.message,
+        messages.EXCEPTION
+      );
+    }
+  }
 }
 module.exports = new BookImplementation();

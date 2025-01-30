@@ -49,6 +49,10 @@ class BookQueries {
       { new: true }
     );
   }
+
+  async getBookHolderUser() {
+    await BookSchema.find().populate("userId");
+  }
 }
 
 module.exports = new BookQueries();
