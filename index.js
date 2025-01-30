@@ -25,7 +25,7 @@ logger.token("status-format", (req, res) => {
 app.use(logger(":method :url :status-format :status :response-time ms"));
 
 app.get("/", (req, res) => {
-  res.send("Hello, Server is Running!");
+  res.send("I'm up and running.");
 });
 
 const dbUri = process.env.DB_URI;

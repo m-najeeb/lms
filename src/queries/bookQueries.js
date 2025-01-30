@@ -45,7 +45,7 @@ class BookQueries {
   async deleteBookDetailsById(id) {
     return await BookSchema.findByIdAndUpdate(
       { _id: id },
-      { $set: { isDeleted: true } },
+      { $set: { isDeleted: true, deletedAt: Date.now() } },
       { new: true }
     );
   }
