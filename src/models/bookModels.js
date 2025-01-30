@@ -40,6 +40,10 @@ const bookSchema = new mongoose.Schema({
     default: null,
   },
   loanIds: [loanSchema],
+  isOnLease: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 bookSchema.plugin(timestamps);

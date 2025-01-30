@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const { role } = require("../../api/enums/userEnums");
 const timestamps = require("mongoose-timestamp");
+const { role } = require("../../api/enums/userEnums");
 
 const userSchema = new mongoose.Schema({
   fullName: {
