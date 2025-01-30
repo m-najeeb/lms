@@ -6,4 +6,6 @@ module.exports = {
   SUCCESSFULLY_BOOK_ADDED: "Successfully Book Added",
   BOOK_NOT_FOUND: "Book Not Found",
   BOOK_UPDATE: "Book Updated",
+  BOOK_FOUND: "Book Found",
+  BOOK_DELETED: "Book Deleted",
 };

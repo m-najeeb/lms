@@ -37,6 +37,14 @@ class BookQueries {
   async getBookDetailsById(id) {
     return await BookSchema.findOne({ _id: id });
   }
+
+  async deleteBookDetailsById(id) {
+    return await BookSchema.findByIdAndUpdate(
+      { _id: id },
+      { $set: { isDeleted: true } },
+      { new: true }
+    );
+  }
 }
 
 module.exports = new BookQueries();
