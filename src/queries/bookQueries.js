@@ -6,8 +6,8 @@ class BookQueries {
     return await book.save();
   }
 
-  async getBookDetails(data) {
-    return await BookSchema.find({ isDeleted: false });
+  async getBookDetails() {
+    return await BookSchema.find();
   }
 
   async getBookById(id) {

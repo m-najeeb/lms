@@ -6,8 +6,7 @@ const bookImplementation = require("../implementation/bookImplementation");
 class BookControllers {
   async getBooks(req, res) {
     try {
-      const data = req.body;
-      const response = await bookImplementation.getBooks(data);
+      const response = await bookImplementation.getBooks();
       res.status(ResponseService.status).send(response);
     } catch (error) {
       ResponseService.status = constants.CODE.INTERNAL_SERVER_ERROR;

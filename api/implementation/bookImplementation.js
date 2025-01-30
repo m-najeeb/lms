@@ -4,9 +4,9 @@ const messages = require("../../src/utilities/messages");
 const BookQueries = require("../../src/queries/bookQueries");
 
 class BookImplementation {
-  async getBooks(data) {
+  async getBooks() {
     try {
-      const response = await BookQueries.getBookDetails(data);
+      const response = await BookQueries.getBookDetails();
       if (response) {
         ResponseService.status = constants.CODE.OK;
         return ResponseService.responseService(
@@ -52,8 +52,8 @@ class BookImplementation {
 
   async searchBook(data) {
     try {
-      const isbn = data.isbn;
-      const response = await BookQueries.getBookByIsbn(isbn);
+      const title = data.title;
+      const response = await BookQueries.getBookByTitle(title);
       if (!response) {
         ResponseService.status = constants.CODE.OK;
         return ResponseService.responseService(

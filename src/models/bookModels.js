@@ -39,5 +39,10 @@ const bookSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+bookSchema.pre("find", function (next) {
+  this.where({ isDeleted: false });
+  next();
+});
+
 const BookSchema = mongoose.model("Book", bookSchema);
 module.exports = { BookSchema };
