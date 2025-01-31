@@ -6,10 +6,6 @@ const loanSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  book: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Book",
-  },
   startData: {
     type: Date,
     default: Date.now(),

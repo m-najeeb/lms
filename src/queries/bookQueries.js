@@ -11,31 +11,31 @@ class BookQueries {
   }
 
   async getBookById(id) {
-    return await BookSchema.findById({ id: id });
+    return await BookSchema.findById({ id });
   }
 
   async getBookByTitle(title) {
-    return await BookSchema.findOne({ title: title });
+    return await BookSchema.find({ title });
   }
 
   async getBookByAuthor(author) {
-    return await BookSchema.findOne({ author: author });
+    return await BookSchema.findOne({ author });
   }
 
   async getBookByIsbn(isbn) {
-    return await BookSchema.findOne({ isbn: isbn });
+    return await BookSchema.findOne({ isbn });
   }
 
   async getBookByCategory(category) {
-    return await BookSchema.findOne({ category: category });
+    return await BookSchema.findOne({ category });
   }
 
   async getBookByPublishedYear(publishedYear) {
-    return await BookSchema.findOne({ publishedYear: publishedYear });
+    return await BookSchema.findOne({ publishedYear });
   }
 
   async getBookByPrice(rentPrice) {
-    return await BookSchema.findOne({ rentPrice: rentPrice });
+    return await BookSchema.findOne({ rentPrice });
   }
 
   async getBookDetailsById(id) {
@@ -54,15 +54,20 @@ class BookQueries {
     const loanBook = LoanSchema.create({ title, userId });
     return await BookSchema.findOneAndUpdate(
       { title },
-      { $set: { isOnLease: true, leaseAt: Date.now(), loanIds: [loanBook] } },
+      { $set: { isOnLease: true, leaseAt: Date.now(), loan: [loanBook] } },
       { new: true }
     );
   }
 
   async getBookStatus(title) {
-    return await BookSchema.find({
-      $and: [{ isOnLease: true }, { title: title }],
+    return await BookSchema.findOne({
+      title,
+      isOnLease: true,
     });
+  }
+
+  async getBorrowedBook() {
+    return await BookSchema.find({ isOnLease: true });
   }
 }
 

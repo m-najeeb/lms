@@ -168,7 +168,6 @@ class BookImplementation {
         );
       }
       const isOnLeaseCheck = await BookQueries.getBookStatus(title);
-      console.log(isOnLeaseCheck);
 
       if (isOnLeaseCheck) {
         ResponseService.status = constants.CODE.BAD_REQUEST;
@@ -189,6 +188,28 @@ class BookImplementation {
           constants.STATUS.SUCCESS,
           response,
           messages.BOOK_UPDATE
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      ResponseService.status = constants.CODE.INTERNAL_SERVER_ERROR;
+      return ResponseService.responseService(
+        constants.STATUS.EXCEPTION,
+        error.message,
+        messages.EXCEPTION
+      );
+    }
+  }
+
+  async borrowedBook() {
+    try {
+      const response = await BookQueries.getBorrowedBook();
+      if (response) {
+        ResponseService.status = constants.CODE.OK;
+        return ResponseService.responseService(
+          constants.STATUS.SUCCESS,
+          response,
+          messages.BOOK_FOUND
         );
       }
     } catch (error) {
