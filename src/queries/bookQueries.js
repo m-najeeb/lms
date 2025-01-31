@@ -1,4 +1,4 @@
-const { BookSchema } = require("../models/bookModels");
+const { BookSchema, LoanSchema } = require("../models/bookModels");
 
 class BookQueries {
   async createBook(data) {
@@ -50,8 +50,19 @@ class BookQueries {
     );
   }
 
-  async getBookHolderUser() {
-    await BookSchema.find().populate("userId");
+  async updateBookStatusByTitle(title, userId) {
+    const loanBook = LoanSchema.create({ title, userId });
+    return await BookSchema.findOneAndUpdate(
+      { title },
+      { $set: { isOnLease: true, leaseAt: Date.now(), loanIds: [loanBook] } },
+      { new: true }
+    );
+  }
+
+  async getBookStatus(title) {
+    return await BookSchema.find({
+      $and: [{ isOnLease: true }, { title: title }],
+    });
   }
 }
 

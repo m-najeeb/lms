@@ -91,9 +91,10 @@ class BookControllers {
     }
   }
 
-  async onLease(req, res) {
+  async borrowBook(req, res) {
     try {
-      const response = await bookImplementation.onLease();
+      const data = req.body;
+      const response = await bookImplementation.borrowBook(data);
       res.status(ResponseService.status).send(response);
     } catch (error) {
       ResponseService.status = constants.CODE.INTERNAL_SERVER_ERROR;

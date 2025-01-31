@@ -8,4 +8,5 @@ module.exports = {
   BOOK_UPDATE: "Book Updated",
   BOOK_FOUND: "Book Found",
   BOOK_DELETED: "Book Deleted",
+  BOOK_NOT_AVAILBLE_TO_BORROW: "Book not available to borrow",
 };

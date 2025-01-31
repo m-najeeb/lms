@@ -6,8 +6,16 @@ const loanSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  numberOfDays: {
-    type: Number,
+  book: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Book",
+  },
+  startData: {
+    type: Date,
+    default: Date.now(),
+  },
+  endData: {
+    type: Date,
   },
 });
 
@@ -39,7 +47,7 @@ const bookSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
-  loanIds: [loanSchema],
+  loan: [loanSchema],
   isOnLease: {
     type: Boolean,
     default: false,
@@ -55,4 +63,5 @@ bookSchema.pre("find", function (next) {
 });
 
 const BookSchema = mongoose.model("Book", bookSchema);
-module.exports = { BookSchema };
+const LoanSchema = mongoose.model("Loan", loanSchema);
+module.exports = { BookSchema, LoanSchema };

@@ -154,15 +154,41 @@ class BookImplementation {
     }
   }
 
-  async onLease() {
+  async borrowBook(data) {
     try {
-      const response = await BookQueries.getBookHolderUser();
-      if (response) {
+      const title = data.title;
+      const userId = data.userId;
+      const response = await BookQueries.getBookByTitle(title);
+      if (!response) {
+        ResponseService.status = constants.CODE.BAD_REQUEST;
+        return ResponseService.responseService(
+          constants.STATUS.ERROR,
+          response,
+          messages.BOOK_NOT_FOUND
+        );
+      }
+      const isOnLeaseCheck = await BookQueries.getBookStatus(title);
+      console.log(isOnLeaseCheck);
+
+      if (isOnLeaseCheck) {
+        ResponseService.status = constants.CODE.BAD_REQUEST;
+        return ResponseService.responseService(
+          constants.STATUS.ERROR,
+          isOnLeaseCheck,
+          messages.BOOK_NOT_AVAILBLE_TO_BORROW
+        );
+      }
+      const borrowedBook = await BookQueries.updateBookStatusByTitle(
+        title,
+        userId
+      );
+
+      if (borrowedBook) {
         ResponseService.status = constants.CODE.OK;
         return ResponseService.responseService(
           constants.STATUS.SUCCESS,
           response,
-          messages.BOOK_FOUND
+          messages.BOOK_UPDATE
         );
       }
     } catch (error) {
