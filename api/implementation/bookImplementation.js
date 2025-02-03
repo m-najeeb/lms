@@ -156,10 +156,7 @@ class BookImplementation {
 
   async borrowBook(data) {
     try {
-      // const { title, userId, numberOfDays } = data;
-      const title = data.title;
-      const userId = data.userId;
-      const numberOfDays = data.numberOfDays;
+      const { title, userId, numberOfDays } = data;
       const response = await BookQueries.getBookByTitle(title);
       if (!response) {
         ResponseService.status = constants.CODE.BAD_REQUEST;
