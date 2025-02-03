@@ -1,4 +1,4 @@
-const { BookSchema, LoanSchema } = require("../models/bookModels");
+const { BookSchema } = require("../models/bookModels");
 
 class BookQueries {
   async createBook(data) {
@@ -7,19 +7,15 @@ class BookQueries {
   }
 
   async getBookDetails() {
-    return await BookSchema.find();
-  }
-
-  async getBookById(id) {
-    return await BookSchema.findById({ id });
+    return await BookSchema.find({ isDeleted: false });
   }
 
   async getBookByTitle(title) {
-    return await BookSchema.find({ title });
+    return await BookSchema.find({ title, isDeleted: false });
   }
 
   async getBookByAuthor(author) {
-    return await BookSchema.findOne({ author });
+    return await BookSchema.find({ author });
   }
 
   async getBookByIsbn(isbn) {
@@ -27,19 +23,19 @@ class BookQueries {
   }
 
   async getBookByCategory(category) {
-    return await BookSchema.findOne({ category });
+    return await BookSchema.find({ category });
   }
 
   async getBookByPublishedYear(publishedYear) {
-    return await BookSchema.findOne({ publishedYear });
+    return await BookSchema.find({ publishedYear });
   }
 
   async getBookByPrice(rentPrice) {
-    return await BookSchema.findOne({ rentPrice });
+    return await BookSchema.find({ rentPrice });
   }
 
   async getBookDetailsById(id) {
-    return await BookSchema.findOne({ _id: id });
+    return await BookSchema.find({ _id: id });
   }
 
   async deleteBookDetailsById(id) {
@@ -50,8 +46,12 @@ class BookQueries {
     );
   }
 
-  async updateBookStatusByTitle(title, userId) {
-    const loanBook = LoanSchema.create({ title, userId });
+  async updateBookStatusByTitle(title, userId, numberOfDays) {
+    const loanBook = {
+      userId,
+      startDate: Date.now(),
+      endDate: Date.now() + 3600 * 1000 * 24 * numberOfDays,
+    };
     return await BookSchema.findOneAndUpdate(
       { title },
       { $set: { isOnLease: true, leaseAt: Date.now(), loan: [loanBook] } },
@@ -66,8 +66,11 @@ class BookQueries {
     });
   }
 
-  async getBorrowedBook() {
-    return await BookSchema.find({ isOnLease: true });
+  async getBorrowedBookWithUserDetails() {
+    return await BookSchema.find({ isOnLease: true }).populate(
+      "loan.userId",
+      "fullName email phone role"
+    );
   }
 }
 

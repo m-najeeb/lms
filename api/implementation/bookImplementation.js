@@ -156,8 +156,10 @@ class BookImplementation {
 
   async borrowBook(data) {
     try {
+      // const { title, userId, numberOfDays } = data;
       const title = data.title;
       const userId = data.userId;
+      const numberOfDays = data.numberOfDays;
       const response = await BookQueries.getBookByTitle(title);
       if (!response) {
         ResponseService.status = constants.CODE.BAD_REQUEST;
@@ -169,25 +171,26 @@ class BookImplementation {
       }
       const isOnLeaseCheck = await BookQueries.getBookStatus(title);
 
-      if (isOnLeaseCheck) {
+      if (isOnLeaseCheck?.isOnLease) {
         ResponseService.status = constants.CODE.BAD_REQUEST;
         return ResponseService.responseService(
           constants.STATUS.ERROR,
-          isOnLeaseCheck,
+          [],
           messages.BOOK_NOT_AVAILBLE_TO_BORROW
         );
       }
       const borrowedBook = await BookQueries.updateBookStatusByTitle(
         title,
-        userId
+        userId,
+        numberOfDays
       );
 
       if (borrowedBook) {
         ResponseService.status = constants.CODE.OK;
         return ResponseService.responseService(
           constants.STATUS.SUCCESS,
-          response,
-          messages.BOOK_UPDATE
+          borrowedBook,
+          messages.BOOK_BORROWED
         );
       }
     } catch (error) {
@@ -201,9 +204,9 @@ class BookImplementation {
     }
   }
 
-  async borrowedBook() {
+  async borrowedBookWithUserDetails() {
     try {
-      const response = await BookQueries.getBorrowedBook();
+      const response = await BookQueries.getBorrowedBookWithUserDetails();
       if (response) {
         ResponseService.status = constants.CODE.OK;
         return ResponseService.responseService(

@@ -6,11 +6,11 @@ const loanSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  startData: {
+  startDate: {
     type: Date,
     default: Date.now(),
   },
-  endData: {
+  endDate: {
     type: Date,
   },
 });
@@ -59,5 +59,4 @@ bookSchema.pre("find", function (next) {
 });
 
 const BookSchema = mongoose.model("Book", bookSchema);
-const LoanSchema = mongoose.model("Loan", loanSchema);
-module.exports = { BookSchema, LoanSchema };
+module.exports = { BookSchema };
