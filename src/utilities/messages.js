@@ -10,4 +10,7 @@ module.exports = {
   BOOK_DELETED: "Book Deleted",
   BOOK_NOT_AVAILBLE_TO_BORROW: "Book not available to borrow",
   BOOK_BORROWED: "Book Borrowed Successfully",
+  BOOK_ALREADY_BORROWED: "This book is already borrowed",
+  BOOK_RETURNED: "Book returned successfully",
+  BOOK_ALREADY_DELETED: "This book is already deleted",
 };
