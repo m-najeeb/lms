@@ -60,6 +60,15 @@ class BookQueries {
   }
 
   async getBookStatus(title) {
+    await BookSchema.updateMany(
+      {
+        isOnLease: true,
+        "loan.endDate": { $lt: new Date() },
+      },
+      {
+        $set: { isOnLease: false },
+      }
+    );
     return await BookSchema.findOne({
       title,
       isOnLease: true,
